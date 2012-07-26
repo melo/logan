@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Deep;
 use lib 't/tlib';
 use MyLogan;
 use MyLogger;
@@ -33,6 +34,34 @@ subtest 'logger creation' => sub {
   ok($l5, '... get a new logger...');
   is(ref($l5),   'MyLogger', '... and it is the new Logger class, magic!');
   is($l5->logan, $lg,        '... with the expected new Logan obj');
+};
+
+
+subtest 'events' => sub {
+  my $lg = MyLogan->setup;    ### Make sure we have a new clean instance
+  my $l  = $lg->logger;
+  my $q  = $lg->queue;
+
+  ok($l->event('log', 'me'), 'simple event sent ok');
+  cmp_deeply(
+    $q->[-1],
+    { class => 'log', subclass => 'me', msg => '', data => {} },
+    '... found expected event structure'
+  );
+
+  ok($l->event('log', 'me', 'msg'), 'Event wiht message sent ok');
+  cmp_deeply(
+    $q->[-1],
+    { class => 'log', subclass => 'me', msg => 'msg', data => {} },
+    '... found expected event structure'
+  );
+
+  ok($l->event('log', 'me', 'msg', { a => 1, b => 2}), 'Event wiht message and user data sent ok');
+  cmp_deeply(
+    $q->[-1],
+    { class => 'log', subclass => 'me', msg => 'msg', data => {a => 1, b => 2} },
+    '... found expected event structure'
+  );
 };
 
 

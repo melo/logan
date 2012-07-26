@@ -38,4 +38,14 @@ sub logger {
 }
 
 
+### Event dispatching
+sub process {
+  my ($self, $event) = @_;
+
+  $self->dispatch($event);
+
+  return 1;
+}
+
+
 1;
