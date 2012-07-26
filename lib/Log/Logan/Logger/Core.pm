@@ -19,7 +19,12 @@ sub event {
     data     => $user_data,
   };
 
+  $self->_event_format($event);
+
   return $self->logan->process($event);
 }
+
+sub _event_format { }
+
 
 1;
