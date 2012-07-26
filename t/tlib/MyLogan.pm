@@ -1,4 +1,4 @@
-package MyLogger;
+package MyLogan;
 
 use Moo;
 extends 'Log::Logan';
