@@ -1,5 +1,7 @@
 #!perl
 
+use strict;
+use warnings;
 use Test::More;
 use lib 't/tlib';
 use MyLogan;
