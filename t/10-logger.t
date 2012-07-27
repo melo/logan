@@ -84,8 +84,6 @@ subtest 'event msg formatting' => sub {
         subclass => 'sc',
         msg      => 'me #{undef_key} for #{scalar_key} with #{ref_key}',
         data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
-        caller   => ignore(),
-        category => 'main',
       }
     ),
     'simple event sent ok'
