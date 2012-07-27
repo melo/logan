@@ -1,6 +1,7 @@
 package Log::Logan::Logger::Core;
 
 use Moo::Role;
+use namespace::autoclean;
 
 has 'logan' => (is => 'ro', required => 1, weak_ref => 1);
 has 'id' => (is => 'lazy');

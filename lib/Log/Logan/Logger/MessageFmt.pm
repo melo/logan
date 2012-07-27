@@ -2,6 +2,7 @@ package Log::Logan::Logger::MessageFmt;
 
 use Moo::Role;
 use Data::Dump ();
+use namespace::autoclean;
 
 requires '_event_format';
 
