@@ -10,6 +10,9 @@ sub meta_cache_run {
   my ($key, $cb, $logger, $e) = @_;
   my $logan = $logger->logan;
 
+  ## Never override event info
+  return if exists $e->{e}{$key};
+
   ## no meta_cache enabled? skip
   $cb->($logger, $e) unless $logan->can('use_meta_cache') && $logan->use_meta_cache;
 
