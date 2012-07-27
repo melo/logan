@@ -43,7 +43,7 @@ sub logger {
 sub process {
   my ($self, $event) = @_;
 
-  $self->dispatch($event);
+  $self->dispatch($event->{e}, $event->{m});
 
   return 1;
 }

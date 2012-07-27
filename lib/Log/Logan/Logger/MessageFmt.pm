@@ -6,10 +6,10 @@ use Data::Dump ();
 requires '_event_format';
 
 before '_event_format' => sub {
-  my ($self, $event) = @_;
-  my $d = $event->{data};
+  my ($self, $e) = @_;
+  my $d = $e->{e}{data};
 
-  $event->{msg} =~ s/#{(.+?)}/$self->_fmt_value_for($d, $1)/ge;
+  $e->{e}{msg} =~ s/#{(.+?)}/$self->_fmt_value_for($d, $1)/ge;
 };
 
 sub _fmt_value_for {

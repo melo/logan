@@ -43,21 +43,22 @@ subtest 'events' => sub {
   my $l  = $lg->logger;
   my $q  = $lg->queue;
 
-  ok($l->event('log', 'me'), 'simple event sent ok');
+  ok($l->event({ class => 'log', subclass => 'me' }), 'simple event sent ok');
   cmp_deeply(
     $q->[-1],
     { class => 'log', subclass => 'me', msg => '', data => {} },
     '... found expected event structure'
   );
 
-  ok($l->event('log', 'me', 'msg'), 'Event wiht message sent ok');
+  ok($l->event({ class => 'log', subclass => 'me', msg => 'msg' }), 'Event wiht message sent ok');
   cmp_deeply(
     $q->[-1],
     { class => 'log', subclass => 'me', msg => 'msg', data => {} },
     '... found expected event structure'
   );
 
-  ok($l->event('log', 'me', 'msg', { a => 1, b => 2 }), 'Event wiht message and user data sent ok');
+  ok($l->event({ class => 'log', subclass => 'me', msg => 'msg', data => { a => 1, b => 2 } }),
+    'Event wiht message and user data sent ok');
   cmp_deeply(
     $q->[-1],
     { class => 'log', subclass => 'me', msg => 'msg', data => { a => 1, b => 2 } },
@@ -73,9 +74,11 @@ subtest 'event msg formatting' => sub {
 
   ok(
     $l->event(
-      'c', 'sc',
-      'me #{undef_key} for #{scalar_key} with #{ref_key}',
-      { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } }
+      { class    => 'c',
+        subclass => 'sc',
+        msg      => 'me #{undef_key} for #{scalar_key} with #{ref_key}',
+        data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
+      }
     ),
     'simple event sent ok'
   );
@@ -84,13 +87,13 @@ subtest 'event msg formatting' => sub {
     { class    => 'c',
       subclass => 'sc',
       msg      => 'me <undef> for 42 with { question => "?" }',
-      data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } }
+      data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
     },
     '... found expected event message'
   );
 
   like(
-    exception { $l->event('s', 'sc', 'no such #{key}') },
+    exception { $l->event({ class => 's', subclass => 'sc', msg => 'no such #{key}' }) },
     qr{^Event message has 'key' field, but no such field found on user data,},
     'placeholders missing from user data will kill you'
   );

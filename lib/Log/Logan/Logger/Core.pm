@@ -8,20 +8,20 @@ has 'id' => (is => 'lazy');
 sub _build_id { shift->logan->generate_id }
 
 sub event {
-  my ($self, $class, $subclass, $msg, $user_data) = @_;
-  $msg       = '' unless defined $msg;
-  $user_data = {} unless ref $user_data;
+  my ($self, $e, $m) = @_;
+  $m = {} unless $m;
 
-  my $event = {
-    class    => $class,
-    subclass => $subclass,
-    msg      => $msg,
-    data     => $user_data,
+  $e->{msg}  = '' unless defined $e->{msg};
+  $e->{data} = {} unless ref $e->{data};
+
+  $e = {
+    e => $e,
+    m => $m,
   };
 
-  $self->_event_format($event);
+  $self->_event_format($e);
 
-  return $self->logan->process($event);
+  return $self->logan->process($e);
 }
 
 sub _event_format { }
