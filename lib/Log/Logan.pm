@@ -7,7 +7,7 @@ package Log::Logan;
 use Moo;
 use namespace::autoclean;
 
-with 'Log::Logan::Core', 'Log::Logan::MetaCache';
+with 'Log::Logan::Core', 'Log::Logan::MetaCache', 'Log::Logan::ID::UUID';
 
 
 1;
