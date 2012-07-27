@@ -7,8 +7,9 @@ package Log::Logan::Session;
 use Moo;
 with 'Log::Logan::Session::Core',    ## Must be the first one
   'Log::Logan::Session::Logger',
+  'Log::Logan::Session::Audit',
   'Log::Logan::Session::MessageFmt',
-  'Log::Logan::Session::Caller', 'Log::Logan::Session::TStamp',    ## Try to keep TStamp as the last one, better accuracy
+  'Log::Logan::Session::Caller', 'Log::Logan::Session::TStamp',   ## Try to keep TStamp as the last one, better accuracy
   ;
 
 
