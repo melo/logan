@@ -5,6 +5,6 @@ package Log::Logan::Logger;
 # AUTHORITY
 
 use Moo;
-with 'Log::Logan::Logger::Core', 'Log::Logan::Logger::MessageFmt';
+with 'Log::Logan::Logger::Core', 'Log::Logan::Logger::MessageFmt', 'Log::Logan::Logger::Caller';
 
 1;

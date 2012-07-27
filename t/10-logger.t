@@ -46,14 +46,14 @@ subtest 'events' => sub {
   ok($l->event({ class => 'log', subclass => 'me' }), 'simple event sent ok');
   cmp_deeply(
     $q->[-1],
-    { class => 'log', subclass => 'me', msg => '', data => {} },
+    { class => 'log', subclass => 'me', msg => '', data => {}, caller => ignore(), category => 'main' },
     '... found expected event structure'
   );
 
   ok($l->event({ class => 'log', subclass => 'me', msg => 'msg' }), 'Event wiht message sent ok');
   cmp_deeply(
     $q->[-1],
-    { class => 'log', subclass => 'me', msg => 'msg', data => {} },
+    { class => 'log', subclass => 'me', msg => 'msg', data => {}, caller => ignore(), category => 'main' },
     '... found expected event structure'
   );
 
@@ -61,7 +61,13 @@ subtest 'events' => sub {
     'Event wiht message and user data sent ok');
   cmp_deeply(
     $q->[-1],
-    { class => 'log', subclass => 'me', msg => 'msg', data => { a => 1, b => 2 } },
+    { class    => 'log',
+      subclass => 'me',
+      msg      => 'msg',
+      data     => { a => 1, b => 2 },
+      caller   => ignore(),
+      category => 'main',
+    },
     '... found expected event structure'
   );
 };
@@ -78,6 +84,8 @@ subtest 'event msg formatting' => sub {
         subclass => 'sc',
         msg      => 'me #{undef_key} for #{scalar_key} with #{ref_key}',
         data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
+        caller   => ignore(),
+        category => 'main',
       }
     ),
     'simple event sent ok'
@@ -88,6 +96,8 @@ subtest 'event msg formatting' => sub {
       subclass => 'sc',
       msg      => 'me <undef> for 42 with { question => "?" }',
       data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
+      caller   => ignore(),
+      category => 'main',
     },
     '... found expected event message'
   );
