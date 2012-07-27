@@ -1,4 +1,4 @@
-package Log::Logan::Logger::Caller;
+package Log::Logan::Session::Caller;
 
 use Moo::Role;
 use Log::Logan::Utils 'meta_cache_run';
@@ -8,7 +8,7 @@ use namespace::autoclean;
 requires '_event_format';
 
 
-## Configuration: override on your App::Logan::Logger to tweak
+## Configuration: override on your App::Logan::Session to tweak
 sub caller_ignore_frame { shift->caller_default_ignore_frame(@_) }
 
 sub should_caller_find_method_name {1}

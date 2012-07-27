@@ -1,4 +1,4 @@
-package Log::Logan::Logger::Core;
+package Log::Logan::Session::Core;
 
 use Moo::Role;
 use namespace::autoclean;

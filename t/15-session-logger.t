@@ -5,10 +5,10 @@ use warnings;
 use Test::More;
 use Test::Deep;
 use lib 't/tlib';
-use MyLogan;
+use T::Simple::Logan;
 
-my $lg = MyLogan->instance;
-my $l  = $lg->logger;
+my $lg = T::Simple::Logan->instance;
+my $l  = $lg->session;
 my $q  = $lg->queue;
 
 my $c = 0;

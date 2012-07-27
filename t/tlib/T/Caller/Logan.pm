@@ -1,8 +1,8 @@
-package MyLoganForCaller;
+package T::Caller::Logan;
 
 use Moo;
 extends 'Log::Logan';
-with 'Log::Logan::ID::UUID', 'MySimpleDispatchQueue';
+with 'Log::Logan::ID::UUID', 'T::Dispatch::Queue';
 
 BEGIN {
   my $has_try_tiny = eval { require Try::Tiny };
@@ -13,13 +13,13 @@ BEGIN {
 
 
 sub simple_caller_test {
-  my $l = shift->logger;
+  my $l = shift->session;
 
   $l->event({ class => 'c', subclass => 'cs', msg => 'msg' });
 }
 
 sub eval_caller_test {
-  my $l = shift->logger;
+  my $l = shift->session;
 
   eval { $l->event({ class => 'c', subclass => 'cs', msg => 'msg' }) };
 }
@@ -27,7 +27,7 @@ sub eval_caller_test {
 sub try_tiny_caller_test {
   return unless has_try_tiny();
 
-  my $l = shift->logger;
+  my $l = shift->session;
 
   try { $l->event({ class => 'c', subclass => 'cs', msg => 'msg' }) };
 }
@@ -35,7 +35,7 @@ sub try_tiny_caller_test {
 sub complex_caller_test {
   return unless has_try_tiny();
 
-  my $l = shift->logger;
+  my $l = shift->session;
 
   eval {
     try {

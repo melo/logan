@@ -1,6 +1,6 @@
 package Log::Logan::ID::UUID;
 
-# ABSTRACT: use UUIDs for Log::Logan::Logger IDs
+# ABSTRACT: use UUIDs for Log::Logan::Session IDs
 # VERSION
 # AUTHORITY
 
@@ -50,7 +50,7 @@ __END__
 
 This role provides the C<< generate_id() >> method that each
 L<Log::Logan> subclass needs to provide unique IDs to each
-L<Log::Logan::Logger> object it creates. It will generate UUIDs (version
+L<Log::Logan::Session> object it creates. It will generate UUIDs (version
 3 or version 4, depends on the backend).
 
 At compile time, two UUID generation modules are checked, and the first

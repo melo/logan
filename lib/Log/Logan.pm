@@ -6,7 +6,7 @@ package Log::Logan;
 
 use Moo;
 use Scalar::Util 'blessed';
-use Log::Logan::Logger;
+use Log::Logan::Session;
 use namespace::autoclean;
 
 with 'Log::Logan::MetaCache';
@@ -29,15 +29,15 @@ with 'Log::Logan::MetaCache';
 }
 
 
-### Logger access
-has 'logger_class' => (is => 'ro', builder => 'default_logger_class');
-sub default_logger_class {'Log::Logan::Logger'}
+### Session access
+has 'session_class' => (is => 'ro', builder => 'default_session_class');
+sub default_session_class {'Log::Logan::Session'}
 
-sub logger {
+sub session {
   my $self = shift;
   $self = $self->instance unless blessed($self);
 
-  $self->logger_class->new(@_, logan => $self);
+  $self->session_class->new(@_, logan => $self);
 }
 
 
@@ -206,7 +206,7 @@ Inside your app, create a subclass of L<Log::Logan>. This is the class
 that will track the current active configuration, and the current active
 log event destination. This is your App::Logger class, the entry point for all things Logan.
 
-When you need to log something you create a L<Log::Logan::Logger> object
+When you need to log something you create a L<Log::Logan::Session> object
 using the C<get_logger()> API on your App::Logger class. The Logger has
 a unique ID associated with it (you also can provide your own) and this
 can be used to correlate log events to the same application request. You

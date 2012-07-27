@@ -6,10 +6,10 @@ use Test::More;
 use lib 't/tlib';
 
 subtest 'id UUID' => sub {
-  require RawIdUUID;
+  require T::ID::UUID;
 
-  ok(RawIdUUID->can('generate_id'), 'C::C::R::ID::UUID provides generate_id method');
-  like(RawIdUUID->generate_id, qr{^[a-fA-F0-9-]{36}$}, '... output looks like a UUID');
+  ok(T::ID::UUID->can('generate_id'), 'C::C::R::ID::UUID provides generate_id method');
+  like(T::ID::UUID->generate_id, qr{^[a-fA-F0-9-]{36}$}, '... output looks like a UUID');
 };
 
 

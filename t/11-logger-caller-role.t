@@ -5,9 +5,9 @@ use warnings;
 use Test::More;
 use Test::Deep;
 use lib 't/tlib';
-use MyLoganForCaller;
+use T::Caller::Logan;
 
-my $lg = MyLoganForCaller->instance;
+my $lg = T::Caller::Logan->instance;
 my $q  = $lg->queue;
 
 $lg->simple_caller_test;
@@ -18,12 +18,12 @@ cmp_deeply(
     msg      => 'msg',
     data     => {},
     caller   => {
-      class  => 'MyLoganForCaller',
+      class  => 'T::Caller::Logan',
       method => 'simple_caller_test',
-      file   => re(qr{t/tlib/MyLoganForCaller[.]pm$}),
+      file   => re(qr{t/tlib/T/Caller/Logan[.]pm$}),
       line   => num(20, 2),
     },
-    category => 'my_logan_for_caller.simple_caller_test',
+    category => 't.caller.logan.simple_caller_test',
     tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for simple_caller_test() ok'
@@ -38,12 +38,12 @@ cmp_deeply(
     msg      => 'msg',
     data     => {},
     caller   => {
-      class  => 'MyLoganForCaller',
+      class  => 'T::Caller::Logan',
       method => 'eval_caller_test',
-      file   => re(qr{t/tlib/MyLoganForCaller[.]pm$}),
+      file   => re(qr{t/tlib/T/Caller/Logan[.]pm$}),
       line   => num(26, 2),
     },
-    category => 'my_logan_for_caller.eval_caller_test',
+    category => 't.caller.logan.eval_caller_test',
     tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for eval_caller_test() ok'
@@ -58,12 +58,12 @@ cmp_deeply(
     msg      => 'msg',
     data     => {},
     caller   => {
-      class  => 'MyLoganForCaller',
+      class  => 'T::Caller::Logan',
       method => 'try_tiny_caller_test',
-      file   => re(qr{t/tlib/MyLoganForCaller[.]pm$}),
+      file   => re(qr{t/tlib/T/Caller/Logan[.]pm$}),
       line   => num(34, 2),
     },
-    category => 'my_logan_for_caller.try_tiny_caller_test',
+    category => 't.caller.logan.try_tiny_caller_test',
     tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for try_tiny_caller_test() ok'
@@ -78,12 +78,12 @@ cmp_deeply(
     msg      => 'msg',
     data     => {},
     caller   => {
-      class  => 'MyLoganForCaller',
+      class  => 'T::Caller::Logan',
       method => 'complex_caller_test',
-      file   => re(qr{t/tlib/MyLoganForCaller[.]pm$}),
+      file   => re(qr{t/tlib/T/Caller/Logan[.]pm$}),
       line   => num(44, 2),
     },
-    category => 'my_logan_for_caller.complex_caller_test',
+    category => 't.caller.logan.complex_caller_test',
     tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for complex_caller_test() ok'

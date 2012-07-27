@@ -1,4 +1,4 @@
-package MySimpleDispatchQueue;
+package T::Dispatch::Queue;
 
 use Moo::Role;
 

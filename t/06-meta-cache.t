@@ -9,7 +9,7 @@ use T::MetaCache::Logan;
 
 subtest 'basic usage' => sub {
   my $lg = T::MetaCache::Logan->instance;
-  my $l  = $lg->logger;
+  my $l  = $lg->session;
   my $q  = $lg->queue;
 
   cmp_deeply($lg->meta_cache, {}, 'cache starts empty');
@@ -35,7 +35,7 @@ subtest 'basic usage' => sub {
 
 subtest 'no overrides' => sub {
   my $lg = T::MetaCache::Logan->setup;    ## forces clean cache
-  my $l  = $lg->logger;
+  my $l  = $lg->session;
   my $q  = $lg->queue;
 
   cmp_deeply($lg->meta_cache, {}, 'cache starts empty');
