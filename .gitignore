@@ -1,3 +1,4 @@
 /Log-Logan-*
 .build
 .prove
+/0[0-9]-*
