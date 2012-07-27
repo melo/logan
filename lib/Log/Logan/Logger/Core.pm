@@ -12,6 +12,12 @@ sub event {
   my $self = shift;
   my $e    = $self->_parse_event_builder_args(@_);
 
+  return $self->process($e);
+}
+
+sub process {
+  my ($self, $e) = @_;
+
   $self->_event_format($e);
 
   return $self->logan->process($e);
