@@ -9,6 +9,8 @@ use Scalar::Util 'blessed';
 use Log::Logan::Logger;
 use namespace::autoclean;
 
+with 'Log::Logan::MetaCache';
+
 
 ### Per-class singleton management
 {
