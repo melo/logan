@@ -6,6 +6,7 @@ package Log::Logan;
 
 use Moo;
 use Scalar::Util 'blessed';
+use Log::Logan::Logger;
 use namespace::autoclean;
 
 
