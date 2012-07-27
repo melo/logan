@@ -85,6 +85,34 @@ subtest 'events' => sub {
     },
     '... found expected event structure'
   );
+
+  ok($l->event(class => 'log'), 'Event with just class, as hash, sent ok');
+  cmp_deeply(
+    $q->[-1],
+    { class    => 'log',
+      msg      => '',
+      data     => {},
+      caller   => ignore(),
+      category => 'main',
+      tstamp   => [num(time(), 1), re(qr{^\d+$})],
+    },
+    '... found expected event structure'
+  );
+
+  ok($l->event(class => 'log', subclass => 'me', msg => 'msg', data => { a => 1, b => 2 }),
+    'Event with message and user data as hash, not hashref sent ok');
+  cmp_deeply(
+    $q->[-1],
+    { class    => 'log',
+      subclass => 'me',
+      msg      => 'msg',
+      data     => { a => 1, b => 2 },
+      caller   => ignore(),
+      category => 'main',
+      tstamp => [num(time(), 1), re(qr{^\d+$})],
+    },
+    '... found expected event structure'
+  );
 };
 
 

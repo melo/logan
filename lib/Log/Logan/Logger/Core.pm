@@ -8,16 +8,8 @@ has 'id' => (is => 'lazy');
 sub _build_id { shift->logan->generate_id }
 
 sub event {
-  my ($self, $e, $m) = @_;
-  $m = $self->new_meta unless $m;
-
-  $e->{msg}  = '' unless defined $e->{msg};
-  $e->{data} = {} unless ref $e->{data};
-
-  $e = {
-    e => $e,
-    m => $m,
-  };
+  my $self = shift;
+  my $e    = $self->_parse_event_builder_args(@_);
 
   $self->_event_format($e);
 
@@ -26,6 +18,24 @@ sub event {
 
 sub _event_format { }
 
-sub new_meta { return { caller => [(caller(1))[0 .. 3]] } }
+sub _parse_event_builder_args {
+  my $self = shift;
+  my ($caller, $file, $line, $api) = my @cf = (caller(1))[0 .. 3];
+
+  my ($e, $m);
+  if (@_ == 1) { $e = $_[0] }
+  elsif (@_ == 2 && ref $_[0]) { ($e, $m) = @_ }
+  elsif (@_ % 2 == 0) { $e = {@_} }
+  else                { die "Bad call to $api: could not parse arguments, $file at $line\n" }
+
+  $m = {} unless ref $m;
+  $m->{caller} = \@cf;
+
+  $e->{msg}  = '' unless defined $e->{msg};
+  $e->{data} = {} unless ref $e->{data};
+
+  return { e => $e, m => $m };
+}
+
 
 1;
