@@ -3,8 +3,7 @@ package T::MetaCache::Logan;
 use Moo;
 use T::MetaCache::Logger;
 
-extends 'Log::Logan';
-with 'T::Dispatch::Queue';
+extends 'T::Logan::Queued';
 
 sub default_session_class { 'T::MetaCache::Logger' }
 

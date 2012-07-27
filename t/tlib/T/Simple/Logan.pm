@@ -1,7 +1,6 @@
 package T::Simple::Logan;
 
 use Moo;
-extends 'Log::Logan';
-with 'T::Dispatch::Queue';
+extends 'T::Logan::Queued';
 
 1;

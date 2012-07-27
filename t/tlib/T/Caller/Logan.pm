@@ -1,8 +1,7 @@
 package T::Caller::Logan;
 
 use Moo;
-extends 'Log::Logan';
-with 'T::Dispatch::Queue';
+extends 'T::Logan::Queued';
 
 BEGIN {
   my $has_try_tiny = eval { require Try::Tiny };
