@@ -9,7 +9,7 @@ sub _build_id { shift->logan->generate_id }
 
 sub event {
   my ($self, $e, $m) = @_;
-  $m = {} unless $m;
+  $m = $self->new_meta unless $m;
 
   $e->{msg}  = '' unless defined $e->{msg};
   $e->{data} = {} unless ref $e->{data};
@@ -26,5 +26,6 @@ sub event {
 
 sub _event_format { }
 
+sub new_meta { return { caller => [(caller(1))[0 .. 3]] } }
 
 1;
