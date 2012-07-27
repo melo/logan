@@ -1,6 +1,7 @@
 package Log::Logan::Logger::Caller;
 
 use Moo::Role;
+use Log::Logan::Utils 'meta_cache_run';
 use namespace::autoclean;
 
 ## Our hook point
@@ -28,25 +29,37 @@ sub caller_default_ignore_frame {
 
 ## The real work is done here
 before '_event_format' => sub {
-  my ($self, $e) = @_;
-  my $icf = $e->{'m'}{'caller'};
+  meta_cache_run(
+    caller => sub {
+      my ($self, $e) = @_;
 
-  my $ci = $e->{e}{caller} = {
-    class => $icf->[0],
-    file  => $icf->[1],
-    line  => $icf->[2],
-  };
+      my $icf = $e->{'m'}{'caller'};
 
-  $self->_caller_find_method_name($e) if $self->should_caller_find_method_name;
+      $e->{e}{caller} = {
+        class => $icf->[0],
+        file  => $icf->[1],
+        line  => $icf->[2],
+      };
 
-  unless ($e->{e}{category}) {
-    my $c = $ci->{class};
-    my $m = exists $ci->{method} ? $ci->{method} : '';
-    $c =~ s/([a-z])([A-Z])/${1}_${2}/g;
-    $c =~ s/::/./g;
-    $m =~ s/^_+//g;
-    $e->{e}{category} = lc(join('.', grep {$_} ($c, $m)));
-  }
+      $self->_caller_find_method_name($e) if $self->should_caller_find_method_name;
+    },
+    @_
+  );
+
+  meta_cache_run(
+    category => sub {
+      my ($self, $e) = @_;
+
+      my $ci = $e->{e}{caller};
+      my $c  = $ci->{class};
+      my $m  = exists $ci->{method} ? $ci->{method} : '';
+      $c =~ s/([a-z])([A-Z])/${1}_${2}/g;
+      $c =~ s/::/./g;
+      $m =~ s/^_+//g;
+      $e->{e}{category} = lc(join('.', grep {$_} ($c, $m)));
+    },
+    @_
+  );
 };
 
 sub _caller_find_method_name {
