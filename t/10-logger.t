@@ -46,14 +46,28 @@ subtest 'events' => sub {
   ok($l->event({ class => 'log', subclass => 'me' }), 'simple event sent ok');
   cmp_deeply(
     $q->[-1],
-    { class => 'log', subclass => 'me', msg => '', data => {}, caller => ignore(), category => 'main' },
+    { class    => 'log',
+      subclass => 'me',
+      msg      => '',
+      data     => {},
+      caller   => ignore(),
+      category => 'main',
+      tstamp   => [num(time(), 1), re(qr{^\d+$})],
+    },
     '... found expected event structure'
   );
 
   ok($l->event({ class => 'log', subclass => 'me', msg => 'msg' }), 'Event wiht message sent ok');
   cmp_deeply(
     $q->[-1],
-    { class => 'log', subclass => 'me', msg => 'msg', data => {}, caller => ignore(), category => 'main' },
+    { class    => 'log',
+      subclass => 'me',
+      msg      => 'msg',
+      data     => {},
+      caller   => ignore(),
+      category => 'main',
+      tstamp   => [num(time(), 1), re(qr{^\d+$})],
+    },
     '... found expected event structure'
   );
 
@@ -67,6 +81,7 @@ subtest 'events' => sub {
       data     => { a => 1, b => 2 },
       caller   => ignore(),
       category => 'main',
+      tstamp => [num(time(), 1), re(qr{^\d+$})],
     },
     '... found expected event structure'
   );
@@ -96,6 +111,7 @@ subtest 'event msg formatting' => sub {
       data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
       caller   => ignore(),
       category => 'main',
+      tstamp => [num(time(), 1), re(qr{^\d+$})],
     },
     '... found expected event message'
   );

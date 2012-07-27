@@ -24,6 +24,7 @@ cmp_deeply(
       line   => num(20, 2),
     },
     category => 'my_logan_for_caller.simple_caller_test',
+    tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for simple_caller_test() ok'
 );
@@ -43,6 +44,7 @@ cmp_deeply(
       line   => num(26, 2),
     },
     category => 'my_logan_for_caller.eval_caller_test',
+    tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for eval_caller_test() ok'
 );
@@ -62,6 +64,7 @@ cmp_deeply(
       line   => num(34, 2),
     },
     category => 'my_logan_for_caller.try_tiny_caller_test',
+    tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for try_tiny_caller_test() ok'
 );
@@ -81,6 +84,7 @@ cmp_deeply(
       line   => num(44, 2),
     },
     category => 'my_logan_for_caller.complex_caller_test',
+    tstamp   => [num(time(), 1), re(qr{^\d+$})],
   },
   'event for complex_caller_test() ok'
 );
