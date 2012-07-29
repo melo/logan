@@ -19,33 +19,68 @@ subtest 'per-class $lg->stash with setup override' => sub {
 };
 
 
-subtest 'stash, simple keys' => sub {
+subtest 'stash_for, simple keys' => sub {
   my $lg = T::Simple::Logan->setup;
   my $my = 'my';
 
-  is($lg->stash($my), undef, 'no stash defined at start');
+  is($lg->stash_for($my), undef, 'no stash_for defined at start');
 
   my $precious = { answer => 42, author => 'dna' };
-  is($lg->stash($my, $precious), $precious, 'stash() returns value set');
+  is($lg->stash_for($my, $precious), $precious, 'stash_for() returns value set');
 
-  is($lg->stash($my), $precious, 'value set properly as expected');
+  is($lg->stash_for($my), $precious, 'value set properly as expected');
 
   $lg = T::Simple::Logan->setup;
-  is($lg->stash($my), undef, 'stash is per-Logan instance, so new instance, fresh stash');
+  is($lg->stash_for($my), undef, 'stash_for is per-Logan instance, so new instance, fresh stash');
 };
 
 
-subtest 'stash, multi-part keys' => sub {
+subtest 'stash_for, multi-part keys' => sub {
   my $lg  = T::Simple::Logan->setup;
   my $ref = {};
   my $my  = ['my', $ref];
 
-  is($lg->stash($my), undef, 'no stash defined at start');
+  is($lg->stash_for($my), undef, 'no stash_for defined at start');
 
   my $precious = { answer => 42, author => 'dna' };
-  is($lg->stash($my, $precious), $precious, 'stash() returns value set');
+  is($lg->stash_for($my, $precious), $precious, 'stash_for() returns value set');
 
-  is($lg->stash($my), $precious, 'value set properly as expected');
+  is($lg->stash_for($my), $precious, 'value set properly as expected');
+};
+
+
+subtest 'stash, simple keys' => sub {
+  my $lg       = T::Simple::Logan->setup;
+  my $my       = 'my';
+  my $precious = { answer => 42, author => 'dna' };
+
+  {
+
+    package StashNS;
+    main::is($lg->stash($my), undef, 'no stash defined at start');
+    main::is($lg->stash($my, $precious), $precious, 'stash() returns value set');
+    main::is($lg->stash($my), $precious, 'value set properly as expected');
+  }
+
+  is($lg->stash_for(['StashNS', $my]), $precious, 'stash() is based on stash_for() using caller pckg as namespace');
+};
+
+
+subtest 'stash, multi-part keys' => sub {
+  my $lg       = T::Simple::Logan->setup;
+  my $ref      = {};
+  my $my       = ['my', $ref];
+  my $precious = { answer => 42, author => 'dna' };
+
+  {
+
+    package StashNS;
+    main::is($lg->stash($my), undef, 'no stash defined at start');
+    main::is($lg->stash($my, $precious), $precious, 'stash() returns value set');
+    main::is($lg->stash($my), $precious, 'value set properly as expected');
+  }
+
+  is($lg->stash_for(['StashNS', @$my]), $precious, 'stash_ns() is based on stash() using caller pckg as namespace');
 };
 
 
