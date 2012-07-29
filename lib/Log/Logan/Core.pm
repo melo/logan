@@ -44,4 +44,20 @@ sub process {
   return 1;
 }
 
+
+### Stash for session components use
+### FIXME: hate the name stash... can't think of a better one right now
+has '_stash' => (is => 'ro', default => sub { {} });
+sub stash {
+  my $self = shift;
+  my $key = shift;
+  $key = join('  --  ', @$key) if ref $key;
+
+  my $stash = $self->_stash;
+  return $stash->{$key} = shift if @_;
+  return $stash->{$key} if exists $stash->{$key};
+  return;
+}
+
+
 1;
