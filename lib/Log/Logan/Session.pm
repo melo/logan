@@ -6,6 +6,7 @@ package Log::Logan::Session;
 
 use Moo;
 with 'Log::Logan::Session::Core',    ## Must be the first one
+  'Log::Logan::Session::Data',
   'Log::Logan::Session::Logger',
   'Log::Logan::Session::Audit',
   'Log::Logan::Session::MessageFmt',
