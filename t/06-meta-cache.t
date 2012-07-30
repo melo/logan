@@ -12,7 +12,6 @@ subtest 'basic usage' => sub {
   my $l  = $lg->session;
   my $q  = $lg->queue;
 
-  cmp_deeply($lg->meta_cache, {}, 'cache starts empty');
   for my $was_calculated (1, 0) {
     $l->event({ class => 'c', subclass => 'sc' });
     cmp_deeply(
@@ -38,7 +37,6 @@ subtest 'no overrides' => sub {
   my $l  = $lg->session;
   my $q  = $lg->queue;
 
-  cmp_deeply($lg->meta_cache, {}, 'cache starts empty');
   for my $was_calculated (0, 0) {
     $l->event({ class => 'c', subclass => 'sc', twist => 42 });
     cmp_deeply(
