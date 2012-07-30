@@ -20,7 +20,7 @@ for my $m (qw( authorized denied create delete updated )) {
       { class    => 'audit',
         subclass => $m,
         msg      => "$m message",
-        data     => { a => $c },
+        args     => { a => $c },
       }
     ),
     "audit $m() ok"

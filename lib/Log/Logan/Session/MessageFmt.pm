@@ -8,14 +8,14 @@ requires '_event_format';
 
 before '_event_format' => sub {
   my ($self, $e) = @_;
-  my $d = $e->{e}{data};
+  my $args = $e->{e}{args};
 
-  $e->{e}{msg} =~ s/#{(.+?)}/$self->_fmt_value_for($d, $1)/ge;
+  $e->{e}{msg} =~ s/#{(.+?)}/$self->_fmt_value_for($args, $1)/ge;
 };
 
 sub _fmt_value_for {
   my ($self, $d, $k) = @_;
-  die "Event message has '$k' field, but no such field found on user data," unless exists $d->{$k};
+  die "Event message has '$k' field, but no such field found on event args," unless exists $d->{$k};
 
   my $v = $d->{$k};
   return $self->message_undef_fmt unless defined $v;

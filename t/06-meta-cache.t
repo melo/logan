@@ -21,7 +21,7 @@ subtest 'basic usage' => sub {
         { class    => 'c',
           subclass => 'sc',
           msg      => '',
-          data     => {},
+          args     => {},
           category => 'main',
           twist    => $$,
         }
@@ -47,7 +47,7 @@ subtest 'no overrides' => sub {
         { class    => 'c',
           subclass => 'sc',
           msg      => '',
-          data     => {},
+          args     => {},
           category => 'main',
           twist    => 42,
         }

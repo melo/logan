@@ -20,7 +20,7 @@ for my $m (qw( trace debug info warn error critical fatal )) {
       { class    => 'logger',
         subclass => $m,
         msg      => "$m message",
-        data     => { a => $c },
+        args     => { a => $c },
       }
     ),
     "$m() ok"

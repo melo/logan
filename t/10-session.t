@@ -48,7 +48,7 @@ subtest 'events' => sub {
     { class    => 'log',
       subclass => 'me',
       msg      => '',
-      data     => {},
+      args     => {},
       caller   => ignore(),
       category => 'main',
       tstamp   => [num(time(), 1), re(qr{^\d+$})],
@@ -62,7 +62,7 @@ subtest 'events' => sub {
     { class    => 'log',
       subclass => 'me',
       msg      => 'msg',
-      data     => {},
+      args     => {},
       caller   => ignore(),
       category => 'main',
       tstamp   => [num(time(), 1), re(qr{^\d+$})],
@@ -70,14 +70,14 @@ subtest 'events' => sub {
     '... found expected event structure'
   );
 
-  ok($l->event({ class => 'log', subclass => 'me', msg => 'msg', data => { a => 1, b => 2 } }),
-    'Event wiht message and user data sent ok');
+  ok($l->event({ class => 'log', subclass => 'me', msg => 'msg', args => { a => 1, b => 2 } }),
+    'Event with message and event args sent ok');
   cmp_deeply(
     $q->[-1],
     { class    => 'log',
       subclass => 'me',
       msg      => 'msg',
-      data     => { a => 1, b => 2 },
+      args     => { a => 1, b => 2 },
       caller   => ignore(),
       category => 'main',
       tstamp => [num(time(), 1), re(qr{^\d+$})],
@@ -90,7 +90,7 @@ subtest 'events' => sub {
     $q->[-1],
     { class    => 'log',
       msg      => '',
-      data     => {},
+      args     => {},
       caller   => ignore(),
       category => 'main',
       tstamp   => [num(time(), 1), re(qr{^\d+$})],
@@ -98,14 +98,14 @@ subtest 'events' => sub {
     '... found expected event structure'
   );
 
-  ok($l->event(class => 'log', subclass => 'me', msg => 'msg', data => { a => 1, b => 2 }),
-    'Event with message and user data as hash, not hashref sent ok');
+  ok($l->event(class => 'log', subclass => 'me', msg => 'msg', args => { a => 1, b => 2 }),
+    'Event with message and event args, as hash sent ok');
   cmp_deeply(
     $q->[-1],
     { class    => 'log',
       subclass => 'me',
       msg      => 'msg',
-      data     => { a => 1, b => 2 },
+      args     => { a => 1, b => 2 },
       caller   => ignore(),
       category => 'main',
       tstamp => [num(time(), 1), re(qr{^\d+$})],

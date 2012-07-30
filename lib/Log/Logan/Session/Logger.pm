@@ -14,7 +14,7 @@ BEGIN {
       $_[0]->process(
         $_[0]->_parse_event_builder_args(
           msg      => $_[1],
-          data     => $_[2],
+          args     => $_[2],
           class    => 'logger',
           subclass => $sev,
         )

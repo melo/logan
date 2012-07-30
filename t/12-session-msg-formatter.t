@@ -18,7 +18,7 @@ ok(
     { class    => 'c',
       subclass => 'sc',
       msg      => 'me #{undef_key} for #{scalar_key} with #{ref_key}',
-      data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
+      args     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
     }
   ),
   'simple event sent ok'
@@ -28,7 +28,7 @@ cmp_deeply(
   { class    => 'c',
     subclass => 'sc',
     msg      => 'me <undef> for 42 with { question => "?" }',
-    data     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
+    args     => { undef_key => undef, scalar_key => '42', ref_key => { question => '?' } },
     caller   => ignore(),
     category => 'main',
     tstamp => [num(time(), 1), re(qr{^\d+$})],
@@ -38,8 +38,8 @@ cmp_deeply(
 
 like(
   exception { $l->event({ class => 's', subclass => 'sc', msg => 'no such #{key}' }) },
-  qr{^Event message has 'key' field, but no such field found on user data,},
-  'placeholders missing from user data will kill you'
+  qr{^Event message has 'key' field, but no such field found on event args,},
+  'placeholders missing from event args will kill you'
 );
 
 

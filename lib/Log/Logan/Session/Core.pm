@@ -39,7 +39,7 @@ sub _parse_event_builder_args {
   $m->{caller} = \@cf;
 
   $e->{msg}  = '' unless defined $e->{msg};
-  $e->{data} = {} unless ref $e->{data};
+  $e->{args} = {} unless ref $e->{args};
 
   return { e => $e, m => $m };
 }

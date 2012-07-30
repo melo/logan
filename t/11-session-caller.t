@@ -16,7 +16,7 @@ cmp_deeply(
   { class    => 'c',
     subclass => 'cs',
     msg      => 'msg',
-    data     => {},
+    args     => {},
     caller   => {
       class  => 'T::Caller::Logan',
       method => 'simple_caller_test',
@@ -36,7 +36,7 @@ cmp_deeply(
   { class    => 'c',
     subclass => 'cs',
     msg      => 'msg',
-    data     => {},
+    args     => {},
     caller   => {
       class  => 'T::Caller::Logan',
       method => 'eval_caller_test',
@@ -56,7 +56,7 @@ cmp_deeply(
   { class    => 'c',
     subclass => 'cs',
     msg      => 'msg',
-    data     => {},
+    args     => {},
     caller   => {
       class  => 'T::Caller::Logan',
       method => 'try_tiny_caller_test',
@@ -76,7 +76,7 @@ cmp_deeply(
   { class    => 'c',
     subclass => 'cs',
     msg      => 'msg',
-    data     => {},
+    args     => {},
     caller   => {
       class  => 'T::Caller::Logan',
       method => 'complex_caller_test',
