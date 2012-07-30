@@ -14,7 +14,7 @@ sub meta_cache_run {
   return if exists $e->{e}{$key};
 
   ## no meta_cache enabled? skip
-  $cb->($session, $e) unless $logan->can('use_meta_cache') && $logan->use_meta_cache;
+  return $cb->($session, $e) unless $logan && $logan->can('use_meta_cache') && $logan->use_meta_cache;
 
   ## use cache if available
   return if defined $logan->meta_cache_fill($e, $key);
