@@ -1,4 +1,4 @@
-package Log::Logan;
+package Logan;
 
 # ABSTRACT: a very cool module
 # VERSION
@@ -7,7 +7,7 @@ package Log::Logan;
 use Moo;
 use namespace::autoclean;
 
-with 'Log::Logan::Core', 'Log::Logan::MetaCache', 'Log::Logan::ID::UUID';
+with 'Logan::Core', 'Logan::MetaCache', 'Logan::ID::UUID';
 
 
 1;
@@ -22,7 +22,7 @@ __END__
     package My::App::Logan;
     
     use Moo;     ## Or Moose, choose your poison
-    with 'Log::Logan::Core';
+    with 'Logan::Core';
     
     sub config {
       ## Must return HashRef with configuration
@@ -41,7 +41,7 @@ __END__
     package Other::App::Logan;
         
     use Moo;
-    with 'Log::Logan::Core', 'Log::Logan::Dispatch::Message::Passing';
+    with 'Logan::Core', 'Logan::Dispatch::Message::Passing';
     
     sub config {
       ## Must return HashRef with configuration
@@ -54,9 +54,9 @@ __END__
     package YA::App::Logan;
         
     use Moo;
-    with 'Log::Logan::Core',
-         'Log::Logan::Dispatch::Message::Passing',
-         'Log::Logan::Config::File';
+    with 'Logan::Core',
+         'Logan::Dispatch::Message::Passing',
+         'Logan::Config::File';
 
     1;
 
@@ -94,7 +94,7 @@ __END__
 
 =head1 DESCRIPTION
 
-The L<Log::Logan> module is not a complete logging solution but a
+The L<Logan> module is not a complete logging solution but a
 building block that you can integrate with your own system.
 
 This module provides the following items:
@@ -161,11 +161,11 @@ Oh yes, and try to have as little impact as possible on your app performance.
 
 This is the best current practice on how to use Logan.
 
-Inside your app, create a subclass of L<Log::Logan>. This is the class
+Inside your app, create a subclass of L<Logan>. This is the class
 that will track the current active configuration, and the current active
 log event destination. This is your App::Logger class, the entry point for all things Logan.
 
-When you need to log something you create a L<Log::Logan::Session> object
+When you need to log something you create a L<Logan::Session> object
 using the C<get_logger()> API on your App::Logger class. The Logger has
 a unique ID associated with it (you also can provide your own) and this
 can be used to correlate log events to the same application request. You

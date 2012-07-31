@@ -1,4 +1,4 @@
-package Log::Logan::Dispatch::ZeroMQ;
+package Logan::Dispatch::ZeroMQ;
 
 use Moo::Role;
 use ZeroMQ ':all';

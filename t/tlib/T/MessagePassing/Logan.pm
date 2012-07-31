@@ -1,8 +1,8 @@
 package T::MessagePassing::Logan;
 
 use Moo;
-extends 'Log::Logan';
-with 'Log::Logan::Dispatch::Message::Passing';
+extends 'Logan';
+with 'Logan::Dispatch::Message::Passing';
 
 use Message::Passing::Output::Test;
 

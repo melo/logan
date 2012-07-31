@@ -9,7 +9,7 @@ use T::Simple::Logan;
 subtest 'per-class $lg->stash with setup override' => sub {
   my $li = T::Simple::Logan->instance;
   ok($li,                    'instance() returned something...');
-  ok($li->isa('Log::Logan'), '... of the expected type');
+  ok($li->isa('Logan'), '... of the expected type');
 
   is(T::Simple::Logan->instance, $li, 'instance() returns the same object all the time');
 

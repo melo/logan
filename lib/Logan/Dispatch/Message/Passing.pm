@@ -1,4 +1,4 @@
-package Log::Logan::Dispatch::Message::Passing;
+package Logan::Dispatch::Message::Passing;
 
 use Moo::Role;
 use namespace::autoclean;

@@ -1,8 +1,8 @@
-package Log::Logan::Core;
+package Logan::Core;
 
 use Moo::Role;
 use Scalar::Util 'blessed';
-use Log::Logan::Session;
+use Logan::Session;
 use namespace::autoclean;
 
 
@@ -25,7 +25,7 @@ use namespace::autoclean;
 
 ### Session access
 has 'session_class' => (is => 'ro', builder => 'default_session_class');
-sub default_session_class {'Log::Logan::Session'}
+sub default_session_class {'Logan::Session'}
 
 sub session {
   my $self = shift;

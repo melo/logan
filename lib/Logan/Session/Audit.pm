@@ -1,4 +1,4 @@
-package Log::Logan::Session::Audit;
+package Logan::Session::Audit;
 
 use Moo::Role;
 use Sub::Name;

@@ -1,4 +1,4 @@
-package Log::Logan::MetaCache;
+package Logan::MetaCache;
 
 use Moo::Role;
 

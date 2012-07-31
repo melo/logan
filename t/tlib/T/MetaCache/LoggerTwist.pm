@@ -1,7 +1,7 @@
 package T::MetaCache::LoggerTwist;
 
 use Moo::Role;
-use Log::Logan::Utils 'meta_cache_run';
+use Logan::Utils 'meta_cache_run';
 use namespace::autoclean;
 
 before '_event_format' => sub {

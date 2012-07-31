@@ -14,7 +14,7 @@ subtest 'logger creation' => sub {
 
   my $l1 = $lg->session;
   ok($l1, 'Got a logger...');
-  is(ref($l1), 'Log::Logan::Session', '... of the expected default Logger class');
+  is(ref($l1), 'Logan::Session', '... of the expected default Logger class');
 
   is($l1->logan, $lg, 'logan attr keeps track of the Logan obj that created us');
   like($l1->id, qr{^[a-fA-F0-9-]{36}$}, '... and the id attr looks like a UUID');

@@ -1,4 +1,4 @@
-package Log::Logan::Session::Data;
+package Logan::Session::Data;
 
 use Moo::Role;
 use Carp 'croak';

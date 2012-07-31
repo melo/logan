@@ -1,6 +1,6 @@
 package T::ID::UUID;
 
 use Moo;
-with 'Log::Logan::ID::UUID';
+with 'Logan::ID::UUID';
 
 1;

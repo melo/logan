@@ -1,4 +1,4 @@
-package Log::Logan::Utils;
+package Logan::Utils;
 
 use strict;
 use warnings;

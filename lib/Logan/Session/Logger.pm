@@ -1,4 +1,4 @@
-package Log::Logan::Session::Logger;
+package Logan::Session::Logger;
 
 use Moo::Role;
 use Sub::Name;

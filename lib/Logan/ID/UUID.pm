@@ -1,6 +1,6 @@
-package Log::Logan::ID::UUID;
+package Logan::ID::UUID;
 
-# ABSTRACT: use UUIDs for Log::Logan::Session IDs
+# ABSTRACT: use UUIDs for Logan::Session IDs
 # VERSION
 # AUTHORITY
 
@@ -36,21 +36,21 @@ __END__
 
 =head1 SYNOPSIS
 
-    ## In your app's Log::Logan subclass
+    ## In your app's Logan subclass
     
     package My::App::Logan;
     
     use Moo; ## or use Moose
-    extends 'Log::Logan';
-    with 'Log::Logan::ID::UUID';
+    extends 'Logan';
+    with 'Logan::ID::UUID';
     
     1;
 
 =head1 DESCRIPTION
 
 This role provides the C<< generate_id() >> method that each
-L<Log::Logan> subclass needs to provide unique IDs to each
-L<Log::Logan::Session> object it creates. It will generate UUIDs (version
+L<Logan> subclass needs to provide unique IDs to each
+L<Logan::Session> object it creates. It will generate UUIDs (version
 3 or version 4, depends on the backend).
 
 At compile time, two UUID generation modules are checked, and the first

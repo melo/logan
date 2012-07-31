@@ -1,7 +1,7 @@
-package Log::Logan::Session::Caller;
+package Logan::Session::Caller;
 
 use Moo::Role;
-use Log::Logan::Utils 'meta_cache_run';
+use Logan::Utils 'meta_cache_run';
 use namespace::autoclean;
 
 ## Our hook point
@@ -18,7 +18,7 @@ sub should_caller_find_method_name {1}
 sub caller_default_ignore_frame {
   my ($self, $c, $m) = @_;
 
-  return 1 if $c =~ m/^Log::Logan:?/;
+  return 1 if $c =~ m/^Logan:?/;
   return 1 if $c =~ m/^Try::Tiny:?/;
   return 1 if $m eq '(eval)';
   return 1 if $m eq '__ANON__';
