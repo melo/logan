@@ -1,7 +1,7 @@
 package Log::Logan::Dispatch::Message::Passing;
 
 use Moo::Role;
-use namespace::clean;
+use namespace::autoclean;
 
 requires 'build_message_passing_dispatcher';
 
