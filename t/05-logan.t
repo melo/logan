@@ -3,12 +3,13 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Deep;
 use lib 't/tlib';
 use T::Simple::Logan;
 
 subtest 'per-class $lg->stash with setup override' => sub {
   my $li = T::Simple::Logan->instance;
-  ok($li,                    'instance() returned something...');
+  ok($li,               'instance() returned something...');
   ok($li->isa('Logan'), '... of the expected type');
 
   is(T::Simple::Logan->instance, $li, 'instance() returns the same object all the time');
@@ -56,13 +57,24 @@ subtest 'stash, simple keys' => sub {
 
   {
 
-    package StashNS;
-    main::is($lg->stash($my), undef, 'no stash defined at start');
-    main::is($lg->stash($my, $precious), $precious, 'stash() returns value set');
-    main::is($lg->stash($my), $precious, 'value set properly as expected');
+    package StashFirstNS;
+    my $val = { p => $precious, ns => 'First' };
+    main::is($lg->stash($my), undef, 'no stash defined at start for StashFirstNS');
+    main::is($lg->stash($my, $val), $val, '... stash() returns value set');
+    main::is($lg->stash($my), $val, '... value set properly as expected');
   }
 
-  is($lg->stash_for(['StashNS', $my]), $precious, 'stash() is based on stash_for() using caller pckg as namespace');
+  {
+
+    package StashSecondNS;
+    my $val = { p => $precious, ns => 'Second' };
+    main::is($lg->stash($my), undef, 'no stash defined at start for StashSecondNS');
+    main::is($lg->stash($my, $val), $val, '... stash() returns value set');
+    main::is($lg->stash($my), $val, '... value set properly as expected');
+  }
+
+  cmp_deeply($lg->stash_for(['StashFirstNS', $my]), { p => $precious, ns => 'First' }, 'stash_for() ns => caller pckg');
+  cmp_deeply($lg->stash_for(['StashSecondNS', $my]), { p => $precious, ns => 'Second' }, '... confirmed for SecondNS');
 };
 
 
