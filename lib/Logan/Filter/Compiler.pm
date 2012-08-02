@@ -248,6 +248,26 @@ sub _emit_condition_atom {
         . '";');
   }
 
+
+  if ($name =~ m{^args[.](.+)$}) {
+    my $arg_field = $1;
+    my ($id, $is_new) = $m->atom_id_for($name, $value);
+    my $atom = '$a' . $id;
+    return ($atom) unless $is_new;
+
+    my $atom_v = '$e->{"args"}{"' . quotemeta($arg_field) . '"}';
+    return ($atom,
+          'my '
+        . $atom
+        . ' = exists '
+        . $atom_v
+        . ' and defined '
+        . $atom_v . ' and '
+        . $atom_v . ' eq "'
+        . quotemeta($value)
+        . '";');
+  }
+
   ## FIXME: reach here => atom name not recognized => complain <= need error reporting
   die "BAD atom '$name',";
 }

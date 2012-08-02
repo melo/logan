@@ -30,6 +30,14 @@ subtest 'condition atom' => sub {
     'category atom generated ok'
   );
 
+  cmp_deeply(
+    [$c->_emit_condition_atom('args.field', 'me', { 'args.field' => 'me' }, $m)],
+    [ '$a4',
+      'my $a4 = exists $e->{"args"}{"field"} and defined $e->{"args"}{"field"} and $e->{"args"}{"field"} eq "me";'
+    ],
+    'args field atom generated ok'
+  );
+
   cmp_deeply([$c->_emit_condition_atom('subclass', 'me', { subclass => 'me' }, $m)],
     ['$a2'], 'duplicate condition atoms dont emit nothing');
 };
