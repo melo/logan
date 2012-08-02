@@ -11,6 +11,8 @@ subtest 'condition atom' => sub {
   my $c = Logan::Filter::Compiler->new;
   my $m = Logan::Filter::Compiler::State->new;
 
+  cmp_deeply([$c->_emit_condition_atom('class', undef, { class => undef }, $m)], [], 'atom with undef values, skipped');
+
   cmp_deeply(
     [$c->_emit_condition_atom('class', 'me', { class => 'me' }, $m)],
     ['$a1', 'my $a1 = $e->{"class"} eq "me";'],
@@ -32,9 +34,9 @@ subtest 'condition code' => sub {
   my $m = Logan::Filter::Compiler::State->new;
 
   is_string(
-    $c->_compile_condition({ condition => { class => 'log' } }, $m),
+    $c->_compile_condition({ condition => { class => 'log', xpto => undef } }, $m),
     'my $a1 = $e->{"class"} eq "log"; if ($a1) ',
-    '_compile_condition() generates proper code, incl condition atom init code',
+    '_compile_condition() generates proper code, incl condition atom init code, undef values skipped',
   );
   is_string(
     $c->_compile_condition({ condition => { class => 'log', subclass => 'critical' } }, $m),
