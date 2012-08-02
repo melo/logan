@@ -116,7 +116,7 @@ sub _compile_config {
   my $m = Logan::Filter::Compiler::State->new;
 
   my $sub_code;
-  for my $rule (@$config_spec) {
+  for my $rule (@{ $config_spec->{rules} }) {
     $sub_code .= $self->_compile_rule($rule, $m);
   }
 
