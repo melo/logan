@@ -203,6 +203,8 @@ sub _compile_condition {
   my @expr_atoms;
   for my $name (sort keys %$cond) {
     my ($check_code, $init_code) = $self->_emit_condition_atom($name, $cond->{$name}, $rule, $m);
+    next unless $check_code;
+
     $cond_code .= $init_code if $init_code;
     push @expr_atoms, $check_code;
   }
@@ -217,11 +219,11 @@ sub _compile_condition {
 
 sub _emit_condition_atom {
   my ($self, $name, $value, $rule, $m) = @_;
+  ## FIXME: value == undef is not supported, we ignore it with a warning
+  return unless defined $value;
 
   ## IDEA: each atom could be a role that uses after/before on this method and emits the code
   if ($name eq 'class' || $name eq 'subclass') {
-    ## FIXME: value == undef is a mistake here, this atoms are required
-    ## we need to figure out how to report errors first, the fix this FIXME's
     my ($id, $is_new) = $m->atom_id_for($name, $value);
     my $atom = '$a' . $id;
     return ($atom) unless $is_new;
