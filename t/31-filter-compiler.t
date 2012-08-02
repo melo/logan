@@ -24,6 +24,12 @@ subtest 'condition atom' => sub {
     'subclass atom generated ok'
   );
 
+  cmp_deeply(
+    [$c->_emit_condition_atom('category', 'me', { category => 'me' }, $m)],
+    ['$a3', 'my $a3 = exists $e->{"category"} and defined $e->{"category"} and $e->{"category"} eq "me";'],
+    'category atom generated ok'
+  );
+
   cmp_deeply([$c->_emit_condition_atom('subclass', 'me', { subclass => 'me' }, $m)],
     ['$a2'], 'duplicate condition atoms dont emit nothing');
 };

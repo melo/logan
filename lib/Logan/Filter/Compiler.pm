@@ -230,6 +230,24 @@ sub _emit_condition_atom {
     return ($atom, 'my ' . $atom . ' = $e->{"' . quotemeta($name) . '"} eq "' . quotemeta($value) . '";');
   }
 
+  if ($name eq 'category') {
+    my ($id, $is_new) = $m->atom_id_for($name, $value);
+    my $atom = '$a' . $id;
+    return ($atom) unless $is_new;
+
+    my $atom_v = '$e->{"' . quotemeta($name) . '"}';
+    return ($atom,
+          'my '
+        . $atom
+        . ' = exists '
+        . $atom_v
+        . ' and defined '
+        . $atom_v . ' and '
+        . $atom_v . ' eq "'
+        . quotemeta($value)
+        . '";');
+  }
+
   ## FIXME: reach here => atom name not recognized => complain <= need error reporting
   die "BAD atom '$name',";
 }
