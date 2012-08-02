@@ -219,15 +219,16 @@ subtest 'filter code' => sub {
 
   my $filter_defaults = { fallback_config => 'fallback' };
   my $filter_code =
-      'do {my %configs = ("one" => '
+      'do { package Logan::Core::Filters::Compiled; my %configs = ("one" => '
     . $one_code
     . ',"two" => '
     . $two_code . ',);'
     . 'sub { my ($logan, $session, $event) = @_;'
     . 'my %state = ('
     . ' should_dispatch => undef,'
-    . ' cfgs_to_check => [],'
-    . ' cfgs_session => $session->stash_for(["Logan::Core::Filters::Exec", "enabled_configs"]),' . ');'
+    . ' cfgs_to_check => [],' . ');'
+    . ' if (my $cfgs_session = $session->stash("enabled_configs")) { $state{cfgs_session} = $cfgs_session }'
+    . ' else { $session->stash("enabled_configs", $state{cfgs_session} = {}) }'
     . ' my $e = $event->{e};'
     . ' my $e_class = $e->{class}; push @{$state{cfgs_to_check}}, $e_class if exists $configs{$e_class};'
     . ' push @{$state{cfgs_to_check}}, "fallback";'
@@ -272,9 +273,6 @@ subtest 'filter compilation and execution' => sub {
   my $l = T::Simple::Logan->setup;
   my $s = $l->session;
 
-  ## this is done by the Filter role, but we skip that here, so initialize it ourselfs
-  $s->stash_for(["Logan::Core::Filters::Exec", "enabled_configs"], {});
-
   is($filter_sub->($l, $s, { e => { class => 'audit' } }),
     0, 'running filter code with event that should not dispatch ok');
   is($filter_sub->($l, $s, { e => { class => 'two', subclass => 'zone' } }),
@@ -283,6 +281,12 @@ subtest 'filter compilation and execution' => sub {
 
   ok($spec->{filter_code}, 'filter spec updated with filter code');
   is($spec->{filter_sub}, $filter_sub, '... and a copy of the filter sub');
+
+  cmp_deeply(
+    $s->stash_for(['Logan::Core::Filters::Compiled', 'enabled_configs']),
+    { 'one' => 1 },
+    'The session stash of enabled configs looks good'
+  );
 
   $c = Logan::Filter::Compiler->new(tidy => 1);
   $filter_sub = $c->compile($spec);

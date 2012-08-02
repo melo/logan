@@ -30,13 +30,15 @@ sub _emit_filter {
   my ($self, $defaults, $configs) = @_;
 
   return
-      'do {'
+      'do { package Logan::Core::Filters::Compiled;'
     . $self->_emit_filter_configs_decl($configs)
     . 'sub { my ($logan, $session, $event) = @_;'
     . 'my %state = ('
     . ' should_dispatch => undef,'
-    . ' cfgs_to_check => [],'
-    . ' cfgs_session => $session->stash_for(["Logan::Core::Filters::Exec", "enabled_configs"]),' . ');'
+    . ' cfgs_to_check => [],' . ');'
+    . ' if (my $cfgs_session = $session->stash("enabled_configs"))'
+    . ' { $state{cfgs_session} = $cfgs_session }'
+    . ' else { $session->stash("enabled_configs", $state{cfgs_session} = {}) }'
     . ' my $e = $event->{e};'
     . $self->_emit_filter_config_per_class_def($defaults)
     . $self->_emit_filter_fallback_config_def($defaults)
@@ -57,7 +59,7 @@ sub _emit_filter {
 sub _emit_filter_configs_decl {
   my ($self, $configs) = @_;
 
-  my $decl_code = 'my %configs = (';
+  my $decl_code = ' my %configs = (';
   for my $name (sort keys %$configs) {
     $decl_code .= '"' . quotemeta($name) . '" => ' . $configs->{$name} . ",";
   }
