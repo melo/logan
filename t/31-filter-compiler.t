@@ -176,10 +176,10 @@ subtest 'config code' => sub {
     . '{ $s->{should_dispatch} = 1;return; }'
     . ' return ; }';
 
-  is_string($c->_compile_config($one_cfg), $one_code, 'config code looks good');
+  is_string($c->_compile_config({ rules => $one_cfg }), $one_code, 'config code looks good');
 
   cmp_deeply(
-    $c->_compile_all_configs({ one => $one_cfg, two => $two_cfg }),
+    $c->_compile_all_configs({ one => { rules => $one_cfg }, two => { rules => $two_cfg } }),
     { one => $one_code,
       two => $two_code,
     },
@@ -215,7 +215,7 @@ subtest 'filter code' => sub {
     . '{ $s->{should_dispatch} = 1;return; }'
     . ' return ; }';
 
-  my $cfg_map = $c->_compile_all_configs({ one => $one_cfg, two => $two_cfg });
+  my $cfg_map = $c->_compile_all_configs({ one => { rules => $one_cfg }, two => { rules => $two_cfg } });
 
   my $filter_defaults = { fallback_config => 'fallback' };
   my $filter_code =
@@ -249,16 +249,20 @@ subtest 'filter compilation and execution' => sub {
   my $spec = {
     defaults => { dispatch => 'no' },
     configs  => {
-      one => [
-        { condition => { class    => 'audit' },    action => { dispatch => 'yes' } },
-        { condition => { subclass => 'critical' }, action => { dispatch => 'yes' } },
-        { action    => { dispatch => 'no' } },
-      ],
-      two => [
-        { condition => { subclass => 'zone' },     action => { enable => 'one' } },
-        { condition => { subclass => 'critical' }, action => { use    => '$one' } },
-        { action    => { dispatch => 'yes' } },
-      ],
+      one => {
+        rules => [
+          { condition => { class    => 'audit' },    action => { dispatch => 'yes' } },
+          { condition => { subclass => 'critical' }, action => { dispatch => 'yes' } },
+          { action    => { dispatch => 'no' } },
+        ]
+      },
+      two => {
+        rules => [
+          { condition => { subclass => 'zone' },     action => { enable => 'one' } },
+          { condition => { subclass => 'critical' }, action => { use    => '$one' } },
+          { action    => { dispatch => 'yes' } },
+        ]
+      },
     }
   };
 
