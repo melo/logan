@@ -5,6 +5,7 @@ use T::MetaCache::Logger;
 
 extends 'T::Logan::Queued';
 
-sub default_session_class { 'T::MetaCache::Logger' }
+sub default_no_filter_should_dispatch {1}
+sub default_session_class             {'T::MetaCache::Logger'}
 
 1;

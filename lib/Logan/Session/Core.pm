@@ -20,7 +20,7 @@ sub process {
 
   $self->_event_format($e);
 
-  return $self->logan->process($e);
+  return $self->logan->process($self, $e);
 }
 
 sub _event_format { }
