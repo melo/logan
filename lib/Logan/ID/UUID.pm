@@ -48,14 +48,13 @@ __END__
 
 =head1 DESCRIPTION
 
-This role provides the C<< generate_id() >> method that each
-L<Logan> subclass needs to provide unique IDs to each
-L<Logan::Session> object it creates. It will generate UUIDs (version
-3 or version 4, depends on the backend).
+This role provides the C<< generate_id() >> method that each L<Logan> subclass
+needs to provide unique IDs to each L<Logan::Session> object it creates. It
+will generate UUIDs (version 3 or version 4, depends on the backend).
 
-At compile time, two UUID generation modules are checked, and the first
-one found is used: L<Data::UUID> and L<Data::UUID::LibUUID>. One of
-those should be added to your application dependencies.
+At compile time, two UUID generation modules are checked, and the first one
+found is used: L<Data::UUID> and L<Data::UUID::LibUUID>. One of those should be
+added to your application dependencies.
 
 =head1 METHODS
 
