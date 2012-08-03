@@ -93,8 +93,6 @@ sub _emit_filter_fallback_config_def {
   return ' push @{$state{cfgs_to_check}}, "' . quotemeta($fallback_cfg) . '";';
 }
 
-#         ### Generated if defaults.fallback_config is true, make sure fallback_config exists, complain if not
-#
 
 ###############################
 # Configuration code generation
