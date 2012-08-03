@@ -9,7 +9,7 @@ with
   'Logan::Core::Singleton',
   'Logan::Core::SessionFactory',
   'Logan::Core::Filter',
-  'Logan::Core::EventProcessing',
+  'Logan::Core::Processing',
   'Logan::Core::Stash';
 
 

@@ -1,4 +1,4 @@
-package Logan::Core::EventProcessing;
+package Logan::Core::Processing;
 
 use Moo::Role;
 use namespace::autoclean;
