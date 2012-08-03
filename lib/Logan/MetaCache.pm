@@ -4,6 +4,9 @@ use Moo::Role;
 
 has 'meta_cache' => (is => 'ro', default => sub { {} });
 
+## FIX: meta-cache should be Core::MetaCache, pull metacache_run from
+## utils into Core::MetaCache too.
+
 sub use_meta_cache {1}
 
 sub meta_cache_add {
