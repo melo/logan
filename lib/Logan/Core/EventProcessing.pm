@@ -3,6 +3,7 @@ package Logan::Core::EventProcessing;
 use Moo::Role;
 use namespace::autoclean;
 
+#requires 'match_rules', 'dispatch';
 requires 'match_rules';
 
 sub process {
