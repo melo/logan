@@ -1,4 +1,4 @@
-package T::Logan::Queued;
+package T::Base::Queued;
 
 use Moo;
 extends 'Logan';
