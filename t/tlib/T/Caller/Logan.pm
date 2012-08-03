@@ -1,7 +1,7 @@
 package T::Caller::Logan;
 
 use Moo;
-extends 'T::Logan::Queued';
+extends 'T::Base::Queued';
 
 BEGIN {
   my $has_try_tiny = eval { require Try::Tiny };
@@ -9,7 +9,6 @@ BEGIN {
 
   sub has_try_tiny {$has_try_tiny}
 }
-
 
 sub simple_caller_test {
   my $l = shift->session;

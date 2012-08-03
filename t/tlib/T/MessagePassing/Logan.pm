@@ -1,11 +1,11 @@
 package T::MessagePassing::Logan;
 
 use Moo;
+use Message::Passing::Output::Test;
 extends 'Logan';
 with 'Logan::Dispatch::Message::Passing';
 
-use Message::Passing::Output::Test;
-
-sub build_message_passing_dispatcher { Message::Passing::Output::Test->new }
+sub default_no_filter_should_dispatch {1}
+sub build_message_passing_output  { Message::Passing::Output::Test->new }
 
 1;

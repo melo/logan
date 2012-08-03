@@ -1,4 +1,4 @@
-package Logan::Session::Logger;
+package Logan::Session::API::Audit;
 
 use Moo::Role;
 use Sub::Name;
@@ -8,15 +8,15 @@ BEGIN {
   no strict 'refs';
   my $p = __PACKAGE__ . '::';
 
-  for my $sev (qw( trace debug info warn error critical fatal )) {
-    my $m = "$p$sev";
+  for my $evn (qw( authorized denied create delete updated )) {
+    my $m = "$p$evn";
     *{$m} = subname $m, sub {
       $_[0]->process(
         $_[0]->_parse_event_builder_args(
           msg      => $_[1],
           args     => $_[2],
-          class    => 'logger',
-          subclass => $sev,
+          class    => 'audit',
+          subclass => $evn,
         )
       );
     };

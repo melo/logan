@@ -20,9 +20,10 @@ sub process {
 
   $self->_event_format($e);
 
-  return $self->logan->process($e);
+  return $self->logan->process($self, $e);
 }
 
+## TODO: better name for _event_format?
 sub _event_format { }
 
 sub _parse_event_builder_args {
