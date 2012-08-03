@@ -1,4 +1,4 @@
-package Logan::Session::Caller;
+package Logan::Session::Event::Caller;
 
 use Moo::Role;
 use Logan::Utils 'meta_cache_run';

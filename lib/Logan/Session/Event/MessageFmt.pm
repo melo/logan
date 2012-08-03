@@ -1,4 +1,4 @@
-package Logan::Session::MessageFmt;
+package Logan::Session::Event::MessageFmt;
 
 use Moo::Role;
 use Data::Dump ();

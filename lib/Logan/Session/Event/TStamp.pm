@@ -1,4 +1,4 @@
-package Logan::Session::TStamp;
+package Logan::Session::Event::TStamp;
 
 use Moo::Role;
 use Time::HiRes 'gettimeofday';
