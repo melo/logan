@@ -32,8 +32,8 @@ subtest 'logger creation' => sub {
   ok($lg, 'Change default logger class');
   my $l5 = $lg->session;
   ok($l5, '... get a new logger...');
-  is(ref($l5),   'T::Simple::Session', '... and it is the new Logger class, magic!');
-  is($l5->logan, $lg,        '... with the expected new Logan obj');
+  is(ref($l5), 'T::Simple::Session', '... and it is the new Logger class, magic!');
+  is($l5->logan, $lg, '... with the expected new Logan obj');
 };
 
 
