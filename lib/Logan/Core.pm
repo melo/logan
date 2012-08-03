@@ -1,7 +1,6 @@
 package Logan::Core;
 
 use Moo::Role;
-use Scalar::Util 'blessed';
 use Logan::Session;
 use namespace::autoclean;
 
