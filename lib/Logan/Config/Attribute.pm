@@ -1,4 +1,4 @@
-package Logan::Config::Static;
+package Logan::Config::Attribute;
 
 use Moo::Role;
 use namespace::autoclean;

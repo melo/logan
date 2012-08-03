@@ -1,4 +1,4 @@
-package T::Config::Static;
+package T::Config::Attribute;
 
 use Moo;
 extends 'T::Base::Queued';
