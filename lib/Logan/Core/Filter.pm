@@ -49,14 +49,20 @@ sub match_rules {
 
   ## Allow per-event override
   return 0 if exists $event->{'m'}{force_discard} and $event->{'m'}{force_discard};
+  push @{ $event->{m}{log} }, "## ... still here after force_discard";
   return 1 if exists $event->{'m'}{force_dispatch} and $event->{'m'}{force_dispatch};
+  push @{ $event->{m}{log} }, "## ... still here after force_dispatch";
 
   ## No filter, no dispatch?
   my $f_sub = $self->_filter_sub;
+  push @{ $event->{m}{log} },
+    "## ... no filter, will exit with " . $self->no_filter_should_dispatch . " via no_filter_should_dispatch"
+    unless ref($f_sub) eq 'CODE';
 
   return $self->no_filter_should_dispatch unless ref($f_sub) eq 'CODE';
 
   ## Run the rules gauntlet
+  push @{ $event->{m}{log} }, "##  ... running filter";
   return $f_sub->($self, $session, $event);
 }
 
