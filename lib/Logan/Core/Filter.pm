@@ -3,8 +3,7 @@ package Logan::Core::Filter;
 use Moo::Role;
 use namespace::autoclean;
 
-
-## FIXME: trap config_updated event to trigger a filter recompile
+requires 'signal_config_updated';
 
 
 ## What to do if there are no rules?
@@ -30,6 +29,7 @@ sub recompile_filter {
     return;
   }
 
+  require Logan::Filter::Compiler;
   my $sub = eval { Logan::Filter::Compiler->new->compile($filter) };
   if (!$sub) {
     $self->filter_recompile_failed($@);
@@ -41,6 +41,12 @@ sub recompile_filter {
 }
 
 sub filter_recompile_failed { print STDERR ref($_[0]) . ": failed to recompile filter - $_[1]\n" }
+
+after 'signal_config_updated' => sub {
+  my ($self) = @_;
+
+  $self->_set_filter($self->config('filter'));
+};
 
 
 ## The matching process
