@@ -17,13 +17,14 @@ sub _build__zmq_context { ZeroMQ::Context->new }
 
 sub _build__zmq_sock {
   my ($self) = @_;
+  my $addr = $self->connect_addr;
+  return unless $addr;
 
   my $sock = $self->_zmq_context->socket(ZMQ_PUB);
-  $sock->connect($self->connect_addr);
+  $sock->connect($addr);
 
   return $sock;
 }
-
 
 sub dispatch {
   my ($self, $ev) = @_;
