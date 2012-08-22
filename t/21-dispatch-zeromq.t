@@ -17,10 +17,18 @@ subtest 'basic events' => sub {
   $s->event({ class => 'c', subclass => 'cs', msg => 'my message' });
 
   my $msgs = _zeromq_read_pending_messages($sb);
-
   cmp_deeply(
     $msgs->[-1],
     { topic => 'c.cs', message => superhashof({ class => 'c', subclass => 'cs', category => 'main' }) },
+    'received message properly'
+  );
+
+  $s->event({ topic_key => 'tk', class => 'c', subclass => 'cs', msg => 'my message' });
+
+  $msgs = _zeromq_read_pending_messages($sb);
+  cmp_deeply(
+    $msgs->[-1],
+    { topic => 'tk', message => superhashof({ class => 'c', subclass => 'cs', category => 'main' }) },
     'received message properly'
   );
 };

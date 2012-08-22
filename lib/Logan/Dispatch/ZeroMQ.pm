@@ -31,9 +31,12 @@ sub dispatch {
   my $sock = $self->_zmq_sock;
   return unless $sock;
 
-  ## TODO: allow $ev->{key}: if it exists, use it
-  my $key = $ev->{class};
-  $key .= '.' . $ev->{subclass} if defined $ev->{subclass};
+  my $key;
+  $key = $ev->{topic_key} if exists $ev->{topic_key};
+  unless ($key) {
+    $key = $ev->{class};
+    $key .= '.' . $ev->{subclass} if defined $ev->{subclass};
+  }
 
   $sock->send($key, ZMQ_SNDMORE);
   $sock->send(encode_json($ev));
