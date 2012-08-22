@@ -35,8 +35,6 @@ sub dispatch {
   my $key = $ev->{class};
   $key .= '.' . $ev->{subclass} if defined $ev->{subclass};
 
-  ## FIXME: switch to key\0message: multi-part messages are deprecated
-  ## by both ZeroMQ and CrossRoads IO projects
   $sock->send($key, ZMQ_SNDMORE);
   $sock->send(encode_json($ev));
 }
