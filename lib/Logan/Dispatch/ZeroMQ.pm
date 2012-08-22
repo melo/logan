@@ -28,6 +28,8 @@ sub _build__zmq_sock {
 
 sub dispatch {
   my ($self, $ev) = @_;
+  my $sock = $self->_zmq_sock;
+  return unless $sock;
 
   ## TODO: allow $ev->{key}: if it exists, use it
   my $key = $ev->{class};
@@ -35,7 +37,6 @@ sub dispatch {
 
   ## FIXME: switch to key\0message: multi-part messages are deprecated
   ## by both ZeroMQ and CrossRoads IO projects
-  my $sock = $self->_zmq_sock;
   $sock->send($key, ZMQ_SNDMORE);
   $sock->send(encode_json($ev));
 }
